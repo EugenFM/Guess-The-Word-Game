@@ -27,3 +27,4 @@ const playAgainButton = document.querySelector(".play-again");
 // Global varaiable for testing the game before fetchin data from API
 const word = "magnolia";
 
+//  Step 1
