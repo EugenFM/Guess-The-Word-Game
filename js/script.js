@@ -26,6 +26,7 @@ const playAgainButton = document.querySelector(".play-again");
 
 // Global varaiable for testing the game before fetchin data from API
 const word = "magnolia";
+
 //  Step 1
 
 //Step 2
@@ -35,3 +36,29 @@ const word = "magnolia";
 //Step 4
 
 // Step 5
+
+// Function to add placeholders for each letter
+const addPlaceholders = function () {
+//  empty array for the symbols (one for each letter)
+    const placeholders = [];
+// for... of loop to loop through each letter of the word magnolia
+ for (let letter of word) {
+     placeholders.push("●");
+     wordInProgress.innerText = placeholders.join("");
+ }
+    
+};
+addPlaceholders(word);
+
+// click event for the guessButton
+guessButton.addEventListener("click", function (e) {
+    // to prevent reloading
+    e.preventDefault();
+// variable to capture the value of the input
+    const inputVal = inputLetter.value;
+    inputLetter.value = "";
+    console.log(inputVal);
+});
+
+
+ 
