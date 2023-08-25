@@ -26,6 +26,7 @@ const playAgainButton = document.querySelector(".play-again");
 
 // Global varaiable for testing the game before fetchin data from API
 const word = "magnolia";
+
 // empty array for guessed letters
 const guessedLetters = [];
 
@@ -53,9 +54,11 @@ guessButton.addEventListener("click", function (e) {
     const input = letterInput.value;
     letterInput.value = "";
     message.innerText = "";
-    // console.log(input);
-    validatePlayerInput(input);
-   makeGuess(input) ;
+    
+    const validateLetter = validatePlayerInput(input);
+    console.log(validateLetter);
+
+   makeGuess(validateLetter) ;
     
 });
 
@@ -72,7 +75,8 @@ const validatePlayerInput = function (input) {
         message.innerText = "We need you to enter a letter from A to Z, please :)";
     } else {
         message.innerText = "Thanks for the input, please keep guessing :)";
-
+        showGuessedLetters();
+        
 }
      return input;
 }
@@ -87,8 +91,58 @@ const makeGuess = function (input) {
   } 
 else {
    guessedLetters.push(input);
-   console.log(guessedLetters);  
+//    console.log(guessedLetters);
+
+   showGuessedLetters();
+
+   updateWordInProgress(guessedLetters);
 }
 };
  
 
+// function to the Guessed Letters
+const showGuessedLetters = function () {
+    guessedLettersElement.innerHTML = "";
+
+// looping through each letter of the guessedLetters array
+    for (const letter of guessedLetters) { 
+        // create a list item for each letter
+        const listItem = document.createElement("li");
+        // content for each li is the letter
+        listItem.innerText = letter;
+        // append the list items to the ul (guessedLettersElement)
+        guessedLettersElement.append(listItem);
+    }
+  };
+
+//   function to update the word in progress
+function updateWordInProgress (guessedLetters) {
+    const wordUpper = word.toUpperCase();
+    const wordArray = wordUpper.split("");
+    console.log(wordArray);
+
+    // empty array for matched letters
+    const revealWord = [];
+    // looping through each letter of the wordArray
+    for (const letter of wordArray) {
+        // push the letter to the revealWord array if it's a match
+    if (guessedLetters.includes(letter)) {
+        revealWord.push(letter);
+
+    } else {
+        revealWord.push("●");
+    }
+    }
+    wordInProgress.innerText = revealWord.join("");
+    checkIfWin();
+}
+
+// updateWordInProgress();
+
+// function to check if the player won
+const checkIfWin = function () {
+    if (wordInProgress.innerText === word.toUpperCase()) {
+        message.classList.add("win");
+        message.innerHTML = `<p class="highlight">You guessed correct the word! Yayyy!!</p>`;
+    }
+}
