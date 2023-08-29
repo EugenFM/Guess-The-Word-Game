@@ -176,6 +176,7 @@ const countRemainingGuesses = function (input) {
     }
     if (remainingGuesses === 0) {
         message.innerText = `Game Over! The word is ${word}.`;
+        startOver()
         
     } else if (remainingGuesses === 1) {
         remainingGuessesSpan.innerText = `${remainingGuesses} guess`;
